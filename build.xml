@@ -27,7 +27,7 @@
 
 		<property name="project" value="" />
 
-		<property name="deployPluginArchiveName" value="releases/NodeREDPlugin_v${DISPLAY_VERSION}.zip" />
+		<property name="deployPluginArchiveName" value="releases/Node-RED-UCD-v${DISPLAY_VERSION}.zip" />
 
 		<property name="src.dir" value="${basedir}/src" />
 		<property name="build.dir" value="${basedir}/build" />
