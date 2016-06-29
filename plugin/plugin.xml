@@ -16,7 +16,7 @@
     <tag>Middleware/NodeRED</tag>
   </header>
   <step-type name='Install'>
-    <description>Install NodeRED on a target server.  The server must have node.js, npm and git installed.</description>
+    <description>Install NodeRED on a target server. The server must have node.js, npm and git installed.</description>
     <properties>
       <property name='installRoot' required='true'>
         <property-ui type='textBox' label='Root directory for Install' description='The root directory in which to install NodeRED.' />
@@ -39,7 +39,7 @@
     </command>
   </step-type>
   <step-type name='Uninstall'>
-    <description>Remomve NodeRED from the target server.</description>
+    <description>Uninstall NodeRED from the target server.</description>
     <properties>
       <property name='installRoot' required='true'>
         <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
@@ -115,7 +115,7 @@
     </command>
   </step-type> 
   <step-type name='Deploy Flow'>
-    <description>Stop NodeRED from the target server.</description>
+    <description>Deploy Flow to Node-RED</description>
     <properties>
       <property name='installRoot' required='true'>
         <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
