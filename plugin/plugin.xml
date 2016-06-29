@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ /**
+  * © Copyright IBM Corporation 2014.  
+  * This is licensed under the following license.
+  * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+  * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+  */
+
+-->
+<plugin xmlns='http://www.urbancode.com/PluginXMLSchema_v1' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+  <header>
+    <identifier id='com.urbancode.air.plugin.NodeRED' version='6' name='Node-RED' />
+    <description>The Node-RED plugin is an automation based plugin. It is used to install, configure, start, and stop Node-RED.</description>
+    <tag>Middleware/NodeRED</tag>
+  </header>
+  <step-type name='Install'>
+    <description>Install NodeRED on a target server.  The server must have node.js, npm and git installed.</description>
+    <properties>
+      <property name='installRoot' required='true'>
+        <property-ui type='textBox' label='Root directory for Install' description='The root directory in which to install NodeRED.' />
+      </property>
+    </properties>
+    <post-processing><![CDATA[ 
+ if (properties.get("exitCode") != 0) {
+ properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+ }
+ else { 
+ properties.put("Status", "Success"); 
+ }
+ ]]></post-processing>
+    <command program='${GROOVY_HOME}/bin/groovy'>
+      <arg value='-cp' />
+      <arg path='classes:${sdkJar}:lib/commons-codec.jar:lib/activation-1.1.1.jar:lib/commons-logging.jar:lib/httpclient-cache.jar:lib/httpclient.jar:lib/httpcore.jar:lib/httpmime.jar:lib/javamail-1.4.1.jar' />
+      <arg file='install.groovy' />
+      <arg file='${PLUGIN_INPUT_PROPS}' />
+      <arg file='${PLUGIN_OUTPUT_PROPS}' />
+    </command>
+  </step-type>
+  <step-type name='Uninstall'>
+    <description>Remomve NodeRED from the target server.</description>
+    <properties>
+      <property name='installRoot' required='true'>
+        <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
+      </property>
+    </properties>
+    <post-processing><![CDATA[ 
+ if (properties.get("exitCode") != 0) {
+ properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+ }
+ else { 
+ properties.put("Status", "Success"); 
+ }
+ ]]></post-processing>
+    <command program='${GROOVY_HOME}/bin/groovy'>
+      <arg value='-cp' />
+      <arg path='classes:${sdkJar}:lib/commons-codec.jar:lib/activation-1.1.1.jar:lib/commons-logging.jar:lib/httpclient-cache.jar:lib/httpclient.jar:lib/httpcore.jar:lib/httpmime.jar:lib/javamail-1.4.1.jar' />
+      <arg file='uninstall.groovy' />
+      <arg file='${PLUGIN_INPUT_PROPS}' />
+      <arg file='${PLUGIN_OUTPUT_PROPS}' />
+    </command>
+  </step-type>
+  <step-type name='Start'>
+    <description>Start NodeRED from the target server.</description>
+    <properties>
+      <property name='installRoot' required='true'>
+        <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
+      </property> 
+      <property name='flowName' required='false'>
+        <property-ui type='textBox' label='Flow to execute' description='The name of the flow NodeRED is execute (including .json suffix). If left empty the default flow will be executed' />
+      </property>    
+    </properties>
+    <post-processing><![CDATA[ 
+ if (properties.get("exitCode") != 0) {
+ properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+ }
+ else { 
+ properties.put("Status", "Success"); 
+ properties.put("Hostname", java.net.InetAddress.getLocalHost().getHostName());
+ var ip = java.net.InetAddress.getLocalHost().getHostAddress();
+ properties.put("IPAddress", ip);
+
+ }
+ ]]></post-processing>
+    <command program='${GROOVY_HOME}/bin/groovy'>
+      <arg value='-cp' />
+      <arg path='classes:${sdkJar}:lib/commons-codec.jar:lib/activation-1.1.1.jar:lib/commons-logging.jar:lib/httpclient-cache.jar:lib/httpclient.jar:lib/httpcore.jar:lib/httpmime.jar:lib/javamail-1.4.1.jar' />
+      <arg file='start.groovy' />
+      <arg file='${PLUGIN_INPUT_PROPS}' />
+      <arg file='${PLUGIN_OUTPUT_PROPS}' />
+    </command>
+  </step-type> 
+  <step-type name='Stop'>
+    <description>Stop NodeRED from the target server.</description>
+    <properties>
+      <property name='installRoot' required='true'>
+        <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
+      </property>    
+    </properties>
+    <post-processing><![CDATA[ 
+ if (properties.get("exitCode") != 0) {
+ properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+ }
+ else { 
+ properties.put("Status", "Success"); 
+ }
+ ]]></post-processing>
+    <command program='${GROOVY_HOME}/bin/groovy'>
+      <arg value='-cp' />
+      <arg path='classes:${sdkJar}:lib/commons-codec.jar:lib/activation-1.1.1.jar:lib/commons-logging.jar:lib/httpclient-cache.jar:lib/httpclient.jar:lib/httpcore.jar:lib/httpmime.jar:lib/javamail-1.4.1.jar' />
+      <arg file='stop.groovy' />
+      <arg file='${PLUGIN_INPUT_PROPS}' />
+      <arg file='${PLUGIN_OUTPUT_PROPS}' />
+    </command>
+  </step-type> 
+  <step-type name='Deploy Flow'>
+    <description>Stop NodeRED from the target server.</description>
+    <properties>
+      <property name='installRoot' required='true'>
+        <property-ui type='textBox' label='Root directory for Install' description='The root directory in which NodeRED is installed.' />
+      </property>
+      <property name='flowName' required='false'>
+        <property-ui type='textBox' label='Flow to deploy' description='The name of the flow to deploy to NodeRED (including .json suffix). If left empty the default flow will be executed' />
+      </property> 
+    </properties>
+    <post-processing><![CDATA[ 
+ if (properties.get("exitCode") != 0) {
+ properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+ }
+ else { 
+ properties.put("Status", "Success"); 
+ }
+ ]]></post-processing>
+    <command program='${GROOVY_HOME}/bin/groovy'>
+      <arg value='-cp' />
+      <arg path='classes:${sdkJar}:lib/commons-codec.jar:lib/activation-1.1.1.jar:lib/commons-logging.jar:lib/httpclient-cache.jar:lib/httpclient.jar:lib/httpcore.jar:lib/httpmime.jar:lib/javamail-1.4.1.jar' />
+      <arg file='deploy.groovy' />
+      <arg file='${PLUGIN_INPUT_PROPS}' />
+      <arg file='${PLUGIN_OUTPUT_PROPS}' />
+    </command>
+  </step-type> 
+</plugin>

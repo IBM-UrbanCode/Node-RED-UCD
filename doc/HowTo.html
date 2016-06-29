@@ -1,0 +1,22 @@
+/**
+ * � Copyright IBM Corporation 2014.  
+ * This is licensed under the following license.
+ * The Eclipse Public 1.0 License (http://www.eclipse.org/legal/epl-v10.html)
+ * U.S. Government Users Restricted Rights:  Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+ */
+
+This plugin currently supports Centos, Fedora, RedHat, Ubuntu, Debian and OpenSUSE linux distributions
+
+Here is how to use the plugin:
+
+1) Install the agent on the computer that is the target on which you wish to install NodeRED.
+2) Upload the plugin zip file from the releases releases folder (e.g NodeREDPlugin_v1.zip ) as a plugin into UCD via "Settings" tab -> "Automation Plugins" -> "Load Plugin".
+3) Once installed the plugin steps are available in the steps palette in the component process editor
+5) To use the plugin add the required step from the Middleware / NodeRED entry in the steps palette to your process.
+6) The following steps are currently provided:
+
+	Deploy Flow -> Installs a NodeRED flow into a install of NodeRED.  This step requires the name of the .json flow file to install and the root directory where NodeRED is installed
+	Install -> Installs NodeRED on the agent host machine.  This step requires the root directory where NodeRED is to be installed.  To install NodeRED the target machine must have Git and Nodejs installed
+	Start -> Starts NodeRED on the agent host machine.  This step requires the root directory where NodeRED is installed and the name of the flow for NodeRED to use.  This links with the "Deploy Flow" step
+	Stop -> Stops NodeRED on the agent host machine.  This step requires the root directory where NodeRED is installed.
+	Uninstall -> Uninstalls NodeRED from the agent host machine. This step requires the root directory where NodeRED is installed.
